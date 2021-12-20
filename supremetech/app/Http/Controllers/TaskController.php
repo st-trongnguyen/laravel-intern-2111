@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
@@ -47,7 +47,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateTaskRequest $request)
+    public function store(TaskRequest $request)
     {
         return redirect()->back()->with('success', __("Thêm thành công!!!"));
     }
@@ -81,7 +81,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateTaskRequest $request, $id)
+    public function update(TaskRequest $request, $id)
     {
         return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
     }
