@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
 use App\Http\Controllers\TaskController;
 
+=======
+use App\Http\Controllers\TestController;
+>>>>>>> 5c7ea4673c35b8b4d7d923282e68457bad00a5bf
 
 /*
 |--------------------------------------------------------------------------
