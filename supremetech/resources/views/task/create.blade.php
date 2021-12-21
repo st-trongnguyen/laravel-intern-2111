@@ -53,7 +53,12 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="{{ old('assignee') }}" placeholder=" Assignee" class="form-control form-control-user" name="assignee" />
+                                <select name="assignee" class="form-control form-options">
+                                    <option value=""  >Select User</option>
+                                    @foreach ($data_user as $item)
+                                        <option value="{{ $item->id }}"  >{{ $item->id }}</option>
+                                    @endforeach
+                                </select>                                
                                 @error('assignee')
                                 {{ $message}}
                                 @enderror

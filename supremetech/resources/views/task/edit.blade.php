@@ -14,59 +14,63 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Edit Task!</h1>
                         </div>
-                        <form class="user" action="{{ route('tasks.update',['task'=>11]) }}" method="POST">
+                        <form class="user" action="{{ route('tasks.update',['task'=>$data_task[0]->id]) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <div class="form-group ">
-                                <input type="text" value="Quyết lựm macbook" class="form-control form-control-user" name="title" />
+                                <input type="text" value="{{ $data_task[0]->title }}" class="form-control form-control-user" name="title" />
                                 @error('title')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="description" value="Thực tập để được thành nhân viên chính thức" class="form-control form-control-user" name="description" />
+                                <input type="text" value="{{ $data_task[0]->description }}" class="form-control form-control-user" name="description" />
                                 @error('description')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="3 thằng 3 chiếc" class="form-control form-control-user" name="type" />
+                                <input type="text" value="{{ $data_task[0]->type }}" class="form-control form-control-user" name="type" />
                                 @error('type')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="1/4 chặng đường" class="form-control form-control-user" name="status" />
+                                <input type="text" value="{{ $data_task[0]->status }}" class="form-control form-control-user" name="status" />
                                 @error('status')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="2021/11/15" class="form-control form-control-user" name="start_date" />
+                                <input type="text" value="{{ $data_task[0]->start_date }}" class="form-control form-control-user" name="start_date" />
                                 @error('start_date')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="2022/02/15" class="form-control form-control-user" name="due_date" />
+                                <input type="text" value="{{ $data_task[0]->due_date }}" class="form-control form-control-user" name="due_date" />
                                 @error('due_date')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="chính là tôi" class="form-control form-control-user" name="assignee" />
+                                <select name="assignee" class="form-control form-options">
+                                    @foreach ($data_user as $item)
+                                        <option {{  $item->id == $data_task[0]->assignee ? 'selected' : ''}} value="{{ $item->id }}"  >{{ $item->id }}</option>
+                                    @endforeach
+                                </select>
                                 @error('assignee')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="3 tháng" class="form-control form-control-user" name="estimate" />
+                                <input type="text" value="{{ $data_task[0]->estimate }}" class="form-control form-control-user" name="estimate" />
                                 @error('estimate')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="2 tháng rưỡi thuôi" class="form-control form-control-user" name="actual" />
+                                <input type="text" value="{{ $data_task[0]->actual }}" class="form-control form-control-user" name="actual" />
                                 @error('actual')
                                 {{ $message}}
                                 @enderror

@@ -17,31 +17,31 @@
                         <form class="user" action="{{ route('tasks.store') }}" method="POST">
                             @csrf
                             <div class="form-group ">
-                                <input type="text" readonly value="Quyết lựm macbook" class="form-control form-control-user" name="title" />
+                                <input type="text" readonly value="{{ $data[0]->title }}" class="form-control form-control-user" name="title" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="Thực tập để được thành nhân viên chính thức" class="form-control form-control-user" name="description" />
+                                <input type="text" readonly value="{{ $data[0]->description }}" class="form-control form-control-user" name="description" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="3 thằng 3 chiếc" class="form-control form-control-user" name="type" />
+                                <input type="text" readonly value="{{ $data[0]->type }}" class="form-control form-control-user" name="type" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="1/4 chặng đường" class="form-control form-control-user" name="status" />
+                                <input type="text" readonly value="{{ $data[0]->status }}" class="form-control form-control-user" name="status" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="2021/11/15" class="form-control form-control-user" name="start_date" />
+                                <input type="text" readonly value="{{ $data[0]->start_date }}" class="form-control form-control-user" name="start_date" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="2022/02/15" class="form-control form-control-user" name="due_date" />
+                                <input type="text" readonly value="{{ $data[0]->due_date }}" class="form-control form-control-user" name="due_date" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="chính là tôi" class="form-control form-control-user" name="assignee" />
+                                <input type="text" readonly value="{{ $data[0]->assignee }}" class="form-control form-control-user" name="assignee" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="3 tháng" class="form-control form-control-user" name="estimate" />
+                                <input type="text" readonly value="{{ $data[0]->estimate }}h" class="form-control form-control-user" name="estimate" />
                             </div>
                             <div class="form-group">
-                                <input type="text" readonly value="2 tháng rưỡi thuôi" class="form-control form-control-user" name="actual" />
+                                <input type="text" readonly value="{{ $data[0]->actual }}h" class="form-control form-control-user" name="actual" />
                             </div>
                         </form>
                     </div>

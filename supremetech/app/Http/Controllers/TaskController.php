@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\TaskRequest;
+use DateTime;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -15,21 +16,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $data =
-            [
-                [
-                    'title' => 'Quyết lựm macbook',
-                    'description' => 'Thực tập để được thành nhân viên chính thức',
-                    'type' => '3 thằng 3 chiếc',
-                    'status' => '1/4 chặng đường',
-                    'start_date' => '2021/11/15',
-                    'due_date' => '2022/02/15',
-                    'assignee' => 'chính là tôi',
-                    'estimate' => '3 tháng',
-                    'actual' => '2 tháng rưỡi thuôi'
-                ]
-            ];
-        return view("task/index", ['data' => $data]);
+        $data = DB::table('tasks')->get();
+        return view("task.index", ['data' => $data]);
     }
 
     /**
@@ -39,7 +27,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view("task/create");
+        $data_users = DB::table('users')->get();
+        return view("task.create", ['data_user' => $data_users]);
     }
 
     /**
@@ -50,6 +39,19 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
+        DB::table('tasks')->insert(
+            array(
+                'title' => $request->title,
+                'description' => $request->description,
+                'type' => $request->type,
+                'status' => $request->status,
+                'start_date' => $request->start_date,
+                'due_date' => $request->due_date,
+                'assignee' => $request->assignee,
+                'estimate' => $request->estimate,
+                'actual' => $request->actual,
+            )
+        );
         return redirect()->back()->with('success', __("Thêm thành công!!!"));
     }
 
@@ -61,7 +63,8 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        return view("task/show");
+        $data = DB::table('tasks')->where('id', $id)->get();
+        return view("task.show", ['data' => $data]);
     }
 
     /**
@@ -70,9 +73,11 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view("task/edit");
+        $data_users = DB::table('users')->get();
+        $data_tasks = DB::table('tasks')->where('id', $id)->get();
+        return view("task.edit", ['data_task' => $data_tasks, 'data_user' => $data_users]);
     }
 
     /**
@@ -84,6 +89,19 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, $id)
     {
+        DB::table('tasks')->where('id', $id)->update(
+            array(
+                'title' => $request->title,
+                'description' => $request->description,
+                'type' => $request->type,
+                'status' => $request->status,
+                'start_date' => $request->start_date,
+                'due_date' => $request->due_date,
+                'assignee' => $request->assignee,
+                'estimate' => $request->estimate,
+                'actual' => $request->actual,
+            )
+        );
         return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
     }
 
@@ -95,6 +113,20 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
+        DB::table('tasks')->where('id', $id)->delete();
         return redirect()->back()->with('success', __("Xóa task " . $id . " thành công!!!"));
+    }
+
+    //Basic execution of the Query Builder statement
+    public function more_query($id)
+    {
+        $user = DB::table('users')->where('name', 'Trọng')->first();
+        var_dump($user);
+        $user1 = DB::table('users')->find(3);
+        var_dump($user1);
+        $user2 = DB::table('users')->count();
+        echo $user2;
+        $user3 = DB::table('orders')->where('finalized', 1)->exists();
+        echo $user2;
     }
 }
