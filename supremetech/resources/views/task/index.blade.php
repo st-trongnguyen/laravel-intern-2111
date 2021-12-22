@@ -29,24 +29,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $value)
+                    @foreach ($tasks as $value)
                     <tr>
-                        <td>{{ $value['title'] }}</td>
-                        <td>{{ $value['description'] }}</td>
-                        <td>{{ $value['type'] }}</td>
-                        <td>{{ $value['status'] }}</td>
-                        <td>{{ $value['start_date'] }}</td>
-                        <td>{{ $value['due_date'] }}</td>
-                        <td>{{ $value['assignee'] }}</td>
-                        <td>{{ $value['estimate'] }}</td>
-                        <td>{{ $value['actual'] }}</td>
+                        <td>{{ $value->title}}</td>
+                        <td>{{ $value->description }}</td>
+                        <td>{{ $value->type }}</td>
+                        <td>{{ $value->status }}</td>
+                        <td>{{ $value->start_date }}</td>
+                        <td>{{ $value->due_date }}</td>
+                        <td>{{ $value->assignee }}</td>
+                        <td>{{ $value->estimate }}</td>
+                        <td>{{ $value->actual }}</td>
                         <td>
-                            <a href="{{ route('tasks.show',[ 'task' => 11 ]) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-sm text-white-50"></i> Show </a>
-                            <a href="{{ route('tasks.edit',[ 'task' => 11 ]) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-sm text-white-50"></i> Edit </a>
-                            <form action="{{ route('tasks.destroy',['task'=>11]) }}" method="POST">
+                            <a href="{{ route('tasks.show',[ 'task' => $value->id ]) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-sm text-white-50"></i> Show </a>
+                            <a href="{{ route('tasks.edit',[ 'task' => $value->id ]) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-sm text-white-50"></i> Edit </a>
+                            <form action="{{ route('tasks.destroy',['task'=>$value->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-sm text-white-50"></i> Delete </a>
+                                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Delete </a>
                             </form>
                         </td>
                     </tr>

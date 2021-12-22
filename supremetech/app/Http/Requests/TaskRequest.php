@@ -25,15 +25,15 @@ class TaskRequest extends FormRequest
     {
         return
             [
-                'title' => 'required|min:5',
-                'description' => 'required|min:20|max:500',
-                'type' => 'required',
-                'status' => 'required',
-                'start_date' => 'required',
-                'due_date' => 'required',
+                'title' => 'required|min:5|max:255',
+                'description' => 'required|min:20|max:1000',
+                'type' => 'required|integer|between:1,10',
+                'status' => 'required|integer|between:1,10',
+                'start_date' => 'required|date',
+                'due_date' => 'required|date|after_or_equal:start_date',
                 'assignee' => 'required',
-                'estimate' => 'required',
-                'actual' => 'required'
+                'estimate' => 'required|numeric|between:0.0,20.0',
+                'actual' => 'required|numeric|between:0.0,20.0'
             ];
     }
 
@@ -49,6 +49,10 @@ class TaskRequest extends FormRequest
                 'required' => ':attribute không được để trống',
                 'max' => ':attribute không lớn hơn :max',
                 'min' => ':attribute không nhỏ hơn :min',
+                'integer' => ':attribute phải là số nguyên',
+                'date' => ':attribute phải là dạng ngày (YYYY-MM-DD)',
+                'numeric' => ':attribute phải là số thập phân',
+                'between' => ':attribute phải nằm trong khoảng :min tới :max',
             ];
     }
 }
