@@ -16,8 +16,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $data = DB::table('tasks')->get();
-        return view("task.index", ['data' => $data]);
+        $tasks = DB::table('tasks')->get();
+        return view("task.index", ['tasks' => $tasks]);
     }
 
     /**
@@ -27,8 +27,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $data_users = DB::table('users')->get();
-        return view("task.create", ['data_user' => $data_users]);
+        $users = DB::table('users')->get();
+        return view("task.create", ['users' => $users]);
     }
 
     /**
@@ -40,7 +40,7 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         DB::table('tasks')->insert(
-            array(
+            [
                 'title' => $request->title,
                 'description' => $request->description,
                 'type' => $request->type,
@@ -50,7 +50,7 @@ class TaskController extends Controller
                 'assignee' => $request->assignee,
                 'estimate' => $request->estimate,
                 'actual' => $request->actual,
-            )
+            ]
         );
         return redirect()->back()->with('success', __("Thêm thành công!!!"));
     }
@@ -63,8 +63,8 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $data = DB::table('tasks')->where('id', $id)->get();
-        return view("task.show", ['data' => $data]);
+        $task = DB::table('tasks')->where('id', $id)->first();
+        return view("task.show", ['task' => $task]);
     }
 
     /**
@@ -75,9 +75,9 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $data_users = DB::table('users')->get();
-        $data_tasks = DB::table('tasks')->where('id', $id)->get();
-        return view("task.edit", ['data_task' => $data_tasks, 'data_user' => $data_users]);
+        $users = DB::table('users')->get();
+        $task = DB::table('tasks')->where('id', $id)->first();
+        return view("task.edit", ['task' => $task, 'users' => $users]);
     }
 
     /**
@@ -90,7 +90,7 @@ class TaskController extends Controller
     public function update(TaskRequest $request, $id)
     {
         DB::table('tasks')->where('id', $id)->update(
-            array(
+            [
                 'title' => $request->title,
                 'description' => $request->description,
                 'type' => $request->type,
@@ -100,7 +100,7 @@ class TaskController extends Controller
                 'assignee' => $request->assignee,
                 'estimate' => $request->estimate,
                 'actual' => $request->actual,
-            )
+            ]
         );
         return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
     }
@@ -127,6 +127,10 @@ class TaskController extends Controller
         $user2 = DB::table('users')->count();
         echo $user2;
         $user3 = DB::table('orders')->where('finalized', 1)->exists();
-        echo $user2;
+        echo $user3;
+        $user4 =  DB::table('users')->join('tasks', 'users.id', '=', 'tasks.assignee')->get();
+        dd($user4);
+        $user5 =  DB::table('users')->join('tasks', 'users.id', '=', 'tasks.assignee')->where('users.id', $id)->get();
+        dd($user5);
     }
 }

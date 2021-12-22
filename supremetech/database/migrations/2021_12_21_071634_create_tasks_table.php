@@ -17,8 +17,8 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('title')->nullable(false);
             $table->text('description')->nullable(false);
-            $table->integer('type')->nullable(false);
-            $table->integer('status')->nullable(false);
+            $table->enum('type',[1,2,3,4,5,6,7,8,9,10])->nullable(false);
+            $table->enum('status',[1,2,3,4,5,6,7,8,9,10])->nullable(false);
             $table->date('start_date')->nullable(false);
             $table->date('due_date')->nullable(false);
             $table->unsignedBigInteger('assignee');

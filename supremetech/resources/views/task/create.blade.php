@@ -55,8 +55,8 @@
                             <div class="form-group">
                                 <select name="assignee" class="form-control form-options">
                                     <option value=""  >Select User</option>
-                                    @foreach ($data_user as $item)
-                                        <option value="{{ $item->id }}"  >{{ $item->id }}</option>
+                                    @foreach ($users as $item)
+                                        <option value="{{ $item->id }}"  >{{ $item->name }}</option>
                                     @endforeach
                                 </select>                                
                                 @error('assignee')

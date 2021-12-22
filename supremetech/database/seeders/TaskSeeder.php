@@ -30,7 +30,7 @@ class TaskSeeder extends Seeder
                     'title' => $faker->text(50),
                     'description' =>  $faker->text(500),
                     'type' => rand(1, 10),
-                    'status' => rand(0, 1),
+                    'status' => rand(1, 10),
                     'start_date' => Carbon::today()->addDays(rand(-15, -5)),
                     'due_date' => Carbon::today()->addDays(rand(1, 3)),
                     'assignee' => $userID,

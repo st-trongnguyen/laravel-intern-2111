@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $value)
+                    @foreach ($tasks as $value)
                     <tr>
                         <td>{{ $value->title}}</td>
                         <td>{{ $value->description }}</td>
@@ -46,7 +46,7 @@
                             <form action="{{ route('tasks.destroy',['task'=>$value->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-sm text-white-50"></i> Delete </a>
+                                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Delete </a>
                             </form>
                         </td>
                     </tr>
