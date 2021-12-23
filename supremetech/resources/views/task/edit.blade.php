@@ -81,6 +81,12 @@
                                 <h4><i class="icon fa fa-check"></i>Thông báo!!!</h4>
                                 {{session('success')}}
                             </div>
+                            @if (session('error'))
+                            <div class="alert alert-error alert dismissible">
+                                <button type="close" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h4><i class="icon fa fa-check"></i>Thông báo!!!</h4>
+                                {{session('error')}}
+                            </div>
                             @endif
                             <button type="submit" class="btn btn-primary btn-user btn-block">Edit Task</button>
 

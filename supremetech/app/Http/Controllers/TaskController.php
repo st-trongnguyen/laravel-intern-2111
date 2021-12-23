@@ -44,7 +44,7 @@ class TaskController extends Controller
         if ($task->firstOrCreate($request->except(['_token']))) {
             return redirect()->back()->with('success', __("Thêm thành công!!!"));
         }
-        return redirect()->back()->with('success', __("Thêm không thành công!!!"));
+        return redirect()->back()->with('error', __("Thêm không thành công!!!"));
     }
 
     /**
@@ -85,7 +85,7 @@ class TaskController extends Controller
         if ($task->update($request->except(['_token', '_method']))) {
             return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
         }
-        return redirect()->back()->with('success', __("Sửa task " . $id . " không thành công!!!"));
+        return redirect()->back()->with('error', __("Sửa task " . $id . " không thành công!!!"));
     }
 
     /**
