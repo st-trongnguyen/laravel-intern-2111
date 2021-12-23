@@ -50,7 +50,7 @@ class User extends Authenticatable
      */
     public function scopeUserName($query, $name)
     {
-        return $query->where('name', $name);
+        return $query->where('name', $name)->get();
     }
 
     /**

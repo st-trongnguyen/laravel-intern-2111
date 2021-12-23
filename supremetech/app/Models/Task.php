@@ -81,4 +81,12 @@ class Task extends Model
     {
         return $query->whereNull('deleted_at')->get();
     }
+
+    /**
+     *Query scope get task with id equal to $id
+     */
+    public function scopeGetTask($query, $id)
+    {
+        return $query->findOrFail($id);
+    }
 }

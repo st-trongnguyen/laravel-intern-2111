@@ -40,11 +40,8 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
-        $task = new Task;
-        if ($task->firstOrCreate($request->except(['_token']))) {
-            return redirect()->back()->with('success', __("Thêm thành công!!!"));
-        }
-        return redirect()->back()->with('error', __("Thêm không thành công!!!"));
+        Task::create($request->except(['_token']));
+        return redirect()->back()->with('success', __("Thêm thành công!!!"));
     }
 
     /**
@@ -55,7 +52,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = Task::findOrFail($id);
+        $task = Task::GetTask($id);
         return view("task.show", ['task' => $task]);
     }
 
@@ -68,7 +65,7 @@ class TaskController extends Controller
     public function edit($id)
     {
         $users = User::get();
-        $task = Task::findOrFail($id);
+        $task = Task::GetTask($id);
         return view("task.edit", ['task' => $task, 'users' => $users]);
     }
 
@@ -81,11 +78,8 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, $id)
     {
-        $task = Task::findOrFail($id);
-        if ($task->update($request->except(['_token', '_method']))) {
-            return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
-        }
-        return redirect()->back()->with('error', __("Sửa task " . $id . " không thành công!!!"));
+        Task::GetTask($id)->update($request->except(['_token', '_method']));
+        return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
     }
 
     /**
@@ -101,9 +95,9 @@ class TaskController extends Controller
     }
 
     //Basic execution of the Query Builder statement
-    public function more_query($id)
+    public function more_query()
     {
-        $user = User::UserName("Trọng")->get();
+        $user = User::UserName("Trọng");
         var_dump($user);
         $user1 = User::find(3);
         var_dump($user1);
