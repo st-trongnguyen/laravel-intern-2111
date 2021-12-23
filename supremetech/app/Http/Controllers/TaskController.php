@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
-use DateTime;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
@@ -16,7 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = DB::table('tasks')->get();
+        $tasks = Task::TaskNotDeleted();
         return view("task.index", ['tasks' => $tasks]);
     }
 
@@ -27,7 +28,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = DB::table('users')->get();
+        $users = User::get();
         return view("task.create", ['users' => $users]);
     }
 
@@ -39,20 +40,11 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
-        DB::table('tasks')->insert(
-            [
-                'title' => $request->title,
-                'description' => $request->description,
-                'type' => $request->type,
-                'status' => $request->status,
-                'start_date' => $request->start_date,
-                'due_date' => $request->due_date,
-                'assignee' => $request->assignee,
-                'estimate' => $request->estimate,
-                'actual' => $request->actual,
-            ]
-        );
-        return redirect()->back()->with('success', __("Thêm thành công!!!"));
+        $task = new Task;
+        if ($task->firstOrCreate($request->except(['_token']))) {
+            return redirect()->back()->with('success', __("Thêm thành công!!!"));
+        }
+        return redirect()->back()->with('success', __("Thêm không thành công!!!"));
     }
 
     /**
@@ -63,7 +55,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = DB::table('tasks')->where('id', $id)->first();
+        $task = Task::findOrFail($id);
         return view("task.show", ['task' => $task]);
     }
 
@@ -75,8 +67,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $users = DB::table('users')->get();
-        $task = DB::table('tasks')->where('id', $id)->first();
+        $users = User::get();
+        $task = Task::findOrFail($id);
         return view("task.edit", ['task' => $task, 'users' => $users]);
     }
 
@@ -89,20 +81,11 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, $id)
     {
-        DB::table('tasks')->where('id', $id)->update(
-            [
-                'title' => $request->title,
-                'description' => $request->description,
-                'type' => $request->type,
-                'status' => $request->status,
-                'start_date' => $request->start_date,
-                'due_date' => $request->due_date,
-                'assignee' => $request->assignee,
-                'estimate' => $request->estimate,
-                'actual' => $request->actual,
-            ]
-        );
-        return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
+        $task = Task::findOrFail($id);
+        if ($task->update($request->except(['_token', '_method']))) {
+            return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
+        }
+        return redirect()->back()->with('success', __("Sửa task " . $id . " không thành công!!!"));
     }
 
     /**
@@ -113,24 +96,22 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('tasks')->where('id', $id)->delete();
+        Task::destroy($id);
         return redirect()->back()->with('success', __("Xóa task " . $id . " thành công!!!"));
     }
 
     //Basic execution of the Query Builder statement
     public function more_query($id)
     {
-        $user = DB::table('users')->where('name', 'Trọng')->first();
+        $user = User::UserName("Trọng")->get();
         var_dump($user);
-        $user1 = DB::table('users')->find(3);
+        $user1 = User::find(3);
         var_dump($user1);
-        $user2 = DB::table('users')->count();
+        $user2 = User::count();
         echo $user2;
-        $user3 = DB::table('orders')->where('finalized', 1)->exists();
-        echo $user3;
-        $user4 =  DB::table('users')->join('tasks', 'users.id', '=', 'tasks.assignee')->get();
+        $user4 =  User::UserJoinTask();
         dd($user4);
-        $user5 =  DB::table('users')->join('tasks', 'users.id', '=', 'tasks.assignee')->where('users.id', $id)->get();
+        $user5 =  User::UserWithIdJoinTask(5);
         dd($user5);
     }
 }

@@ -27,8 +27,8 @@ class TaskRequest extends FormRequest
             [
                 'title' => 'required|min:5|max:255',
                 'description' => 'required|min:20|max:1000',
-                'type' => 'required|integer|between:1,10',
-                'status' => 'required|integer|between:1,10',
+                'type' => 'required',
+                'status' => 'required',
                 'start_date' => 'required|date',
                 'due_date' => 'required|date|after_or_equal:start_date',
                 'assignee' => 'required',

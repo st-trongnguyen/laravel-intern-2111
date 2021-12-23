@@ -41,4 +41,37 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     *Query scope only includes tasks with the same name $name.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUserName($query, $name)
+    {
+        return $query->where('name', $name);
+    }
+
+    /**
+     *Query scope select all user join task.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUserJoinTask($query)
+    {
+        return $query->join('tasks', 'users.id', '=', 'tasks.assignee')->get();
+    }
+
+    /**
+     *Query scope select all user join task where id same $id.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUserWithIdJoinTask($query, $id)
+    {
+        return $query->join('tasks', 'users.id', '=', 'tasks.assignee')->where('users.id', $id)->get();
+    }
 }
