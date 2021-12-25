@@ -50,7 +50,7 @@ class User extends Authenticatable
      */
     public function scopeUserName($query, $name)
     {
-        return $query->where('name', $name)->get();
+        return $query->where('name', $name);
     }
 
     /**
@@ -61,7 +61,7 @@ class User extends Authenticatable
      */
     public function scopeUserJoinTask($query)
     {
-        return $query->join('tasks', 'users.id', '=', 'tasks.assignee')->get();
+        return $query->join('tasks', 'users.id', '=', 'tasks.assignee');
     }
 
     /**
@@ -72,6 +72,6 @@ class User extends Authenticatable
      */
     public function scopeUserWithIdJoinTask($query, $id)
     {
-        return $query->join('tasks', 'users.id', '=', 'tasks.assignee')->where('users.id', $id)->get();
+        return $query->join('tasks', 'users.id', '=', 'tasks.assignee')->where('users.id', $id);
     }
 }

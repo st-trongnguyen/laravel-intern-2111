@@ -13,7 +13,6 @@ class Task extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public $timestamps = false;
 
     protected $fillable = [
         'title',
@@ -79,7 +78,7 @@ class Task extends Model
      */
     public function scopeTaskNotDeleted($query)
     {
-        return $query->whereNull('deleted_at')->get();
+        return $query->whereNull('deleted_at');
     }
 
     /**

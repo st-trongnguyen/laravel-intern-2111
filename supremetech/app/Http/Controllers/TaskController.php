@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
+use App\Interfaces\TaskRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+
 
 class TaskController extends Controller
 {
+    private TaskRepositoryInterface $taskRepository;
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(TaskRepositoryInterface $taskRepository, UserRepositoryInterface $userRepository)
+    {
+        $this->taskRepository = $taskRepository;
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +28,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::TaskNotDeleted();
+        $tasks = $this->taskRepository->getAllTasks();
         return view("task.index", ['tasks' => $tasks]);
     }
 
@@ -28,7 +39,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = User::get();
+        $users = $this->userRepository->getAllUsers();
         return view("task.create", ['users' => $users]);
     }
 
@@ -40,7 +51,7 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
-        Task::create($request->except(['_token']));
+        $this->taskRepository->createTask($request->validated());
         return redirect()->back()->with('success', __("Thêm thành công!!!"));
     }
 
@@ -52,7 +63,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = Task::GetTask($id);
+        $task = $this->taskRepository->getTaskById($id);
         return view("task.show", ['task' => $task]);
     }
 
@@ -64,8 +75,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $users = User::get();
-        $task = Task::GetTask($id);
+        $users = $this->userRepository->getAllUsers();;
+        $task = $this->taskRepository->getTaskById($id);
         return view("task.edit", ['task' => $task, 'users' => $users]);
     }
 
@@ -78,7 +89,7 @@ class TaskController extends Controller
      */
     public function update(TaskRequest $request, $id)
     {
-        Task::GetTask($id)->update($request->except(['_token', '_method']));
+        $this->taskRepository->updateTask($id, $request->validated());
         return redirect()->back()->with('success', __("Sửa task " . $id . " thành công!!!"));
     }
 
@@ -90,22 +101,22 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        Task::destroy($id);
+        $this->taskRepository->deleteTask($id);
         return redirect()->back()->with('success', __("Xóa task " . $id . " thành công!!!"));
     }
 
     //Basic execution of the Query Builder statement
     public function more_query()
     {
-        $user = User::UserName("Trọng");
+        $user = User::userName("Trọng")->get();
         var_dump($user);
         $user1 = User::find(3);
         var_dump($user1);
         $user2 = User::count();
         echo $user2;
-        $user4 =  User::UserJoinTask();
+        $user4 =  User::userJoinTask()->get();
         dd($user4);
-        $user5 =  User::UserWithIdJoinTask(5);
+        $user5 =  User::userWithIdJoinTask(5)->get();
         dd($user5);
     }
 }
