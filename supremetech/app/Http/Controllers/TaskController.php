@@ -104,19 +104,4 @@ class TaskController extends Controller
         $this->taskRepository->deleteTask($id);
         return redirect()->back()->with('success', __("Xóa task " . $id . " thành công!!!"));
     }
-
-    //Basic execution of the Query Builder statement
-    public function more_query()
-    {
-        $user = User::userName("Trọng")->get();
-        var_dump($user);
-        $user1 = User::find(3);
-        var_dump($user1);
-        $user2 = User::count();
-        echo $user2;
-        $user4 =  User::userJoinTask()->get();
-        dd($user4);
-        $user5 =  User::userWithIdJoinTask(5)->get();
-        dd($user5);
-    }
 }

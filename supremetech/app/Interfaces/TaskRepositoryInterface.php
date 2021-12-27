@@ -9,5 +9,4 @@ interface TaskRepositoryInterface
     public function deleteTask($taskId);
     public function createTask(array $taskDetails);
     public function updateTask($taskId, array $newDetails);
-    public function getFulfilledTasks();
 }

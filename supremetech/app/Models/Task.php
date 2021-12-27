@@ -86,6 +86,6 @@ class Task extends Model
      */
     public function scopeGetTask($query, $id)
     {
-        return $query->findOrFail($id);
+        return $query->find($id);
     }
 }

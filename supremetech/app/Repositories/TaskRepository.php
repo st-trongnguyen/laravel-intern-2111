@@ -31,9 +31,4 @@ class TaskRepository implements TaskRepositoryInterface
     {
         return Task::getTask($taskId)->update($newDetails);
     }
-
-    public function getFulfilledTasks()
-    {
-        return Task::where('is_fulfilled', true);
-    }
 }
