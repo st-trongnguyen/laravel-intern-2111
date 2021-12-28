@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -43,35 +42,10 @@ class User extends Authenticatable
     ];
 
     /**
-     *Query scope only includes tasks with the same name $name.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the task for user do.
      */
-    public function scopeUserName($query, $name)
+    public function tasks()
     {
-        return $query->where('name', $name);
-    }
-
-    /**
-     *Query scope select all user join task.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeUserJoinTask($query)
-    {
-        return $query->join('tasks', 'users.id', '=', 'tasks.assignee');
-    }
-
-    /**
-     *Query scope select all user join task where id same $id.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeUserWithIdJoinTask($query, $id)
-    {
-        return $query->join('tasks', 'users.id', '=', 'tasks.assignee')->where('users.id', $id);
+        return $this->hasMany(Task::class,'assignee');
     }
 }

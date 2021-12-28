@@ -29,13 +29,26 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="{{ old('type') }}" placeholder=" Type" class="form-control form-control-user" name="type" />
+                                <select name="type" class="form-control form-options">
+                                    <option value="" >Select Type</option>
+                                    <option {{  old('type') == 1 ? 'selected' : ''}} value="1"  >Story</option>
+                                    <option {{  old('type') == 2 ? 'selected' : ''}} value="2"  >Task</option>
+                                    <option {{  old('type') == 3 ? 'selected' : ''}} value="3"  >Bug</option>
+                                </select>
                                 @error('type')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="{{ old('status') }}" placeholder=" Status" class="form-control form-control-user" name="status" />
+                                <select name="status" class="form-control form-options">
+                                    <option value="">Select Status</option>
+                                    <option {{  old('status') == 1 ? 'selected' : ''}} value="1"  >Open</option>
+                                    <option {{  old('status') == 2 ? 'selected' : ''}} value="2"  >In progress</option>
+                                    <option {{  old('status') == 3 ? 'selected' : ''}} value="3"  >Resolved</option>
+                                    <option {{  old('status') == 4 ? 'selected' : ''}} value="4"  >Pending</option>
+                                    <option {{  old('status') == 5 ? 'selected' : ''}} value="5"  >Verified</option>
+                                    <option {{  old('status') == 6 ? 'selected' : ''}} value="6"  >Closed</option>
+                                </select>
                                 @error('status')
                                 {{ $message}}
                                 @enderror

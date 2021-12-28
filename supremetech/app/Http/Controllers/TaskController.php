@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
-use App\Models\Task;
-use App\Models\User;
 
 
 class TaskController extends Controller
 {
-    private TaskRepositoryInterface $taskRepository;
-    private UserRepositoryInterface $userRepository;
+    private  $taskRepository;
+    private  $userRepository;
 
     public function __construct(TaskRepositoryInterface $taskRepository, UserRepositoryInterface $userRepository)
     {
