@@ -30,13 +30,24 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="{{ $task->type }}" class="form-control form-control-user" name="type" />
+                                <select name="type" class="form-control form-options">
+                                    <option {{  $task->type == 1 ? 'selected' : ''}} value="1"  >Story</option>
+                                    <option {{  $task->type == 2 ? 'selected' : ''}} value="2"  >Task</option>
+                                    <option {{  $task->type == 3 ? 'selected' : ''}} value="3"  >Bug</option>
+                                </select>
                                 @error('type')
                                 {{ $message}}
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" value="{{ $task->status }}" class="form-control form-control-user" name="status" />
+                                <select name="status" class="form-control form-options">
+                                    <option {{  $task->status == 1 ? 'selected' : ''}} value="1"  >Open</option>
+                                    <option {{  $task->status == 2 ? 'selected' : ''}} value="2"  >In progress</option>
+                                    <option {{  $task->status == 3 ? 'selected' : ''}} value="3"  >Resolved</option>
+                                    <option {{  $task->status == 4 ? 'selected' : ''}} value="4"  >Pending</option>
+                                    <option {{  $task->status == 5 ? 'selected' : ''}} value="5"  >Verified</option>
+                                    <option {{  $task->status == 6 ? 'selected' : ''}} value="6"  >Closed</option>
+                                </select>
                                 @error('status')
                                 {{ $message}}
                                 @enderror
