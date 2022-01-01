@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->getAllUsers();
-        return view("user.listUser", ['users' => $users]);
+        return view("user.list_user", ['users' => $users]);
     }
 
     /**
@@ -54,8 +54,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->userRepository->getUserById($id);
-        $detailUser = $user->tasks;
-        return view("user.detailUser", ['detailUser' => $detailUser, 'user' => $user]);
+        return view("user.detail_user", ['user' => $user]);
     }
 
     /**

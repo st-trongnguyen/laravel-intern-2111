@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($detailUser as $task => $value)
+                    @foreach ($user->tasks as $task => $value)
                     <tr>
                         <td>{{ $value->title}}</td>
                         <td>{{ $value->description }}</td>
